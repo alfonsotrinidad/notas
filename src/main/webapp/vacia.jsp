@@ -9,7 +9,7 @@
 <body>
 <%
 
-  String op = (String)session.getAttribute("op");
+  String op = (String)request.getSession().getAttribute("op");
    
   
   %>

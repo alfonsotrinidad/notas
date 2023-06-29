@@ -13,10 +13,14 @@ public class MysqlBDConexion {
 	}
 	
 	
-	public static Connection getConexion(){
+	public Connection getConexion(){
+		String URL = "jdbc:mysql://localhost:3306/cibertec?serverTimezone=UTC";
+		final String USUARIO = "root";
+		final String PASSWORD = "";
+		//"jdbc:mysql://localhost/cibertec?useTimezone=true&serverTimezone=UTC"
 		Connection con=null;
 		try {
-			con=DriverManager.getConnection("jdbc:mysql://localhost/cibertec?useTimezone=true&serverTimezone=UTC","root","root");
+			con=DriverManager.getConnection(URL,USUARIO,PASSWORD);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

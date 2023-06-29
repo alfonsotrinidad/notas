@@ -21,13 +21,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level ;
-
-
-
-
-
-
+import java.util.logging.Level;
 
 /**
  * Servlet implementation class Login
@@ -35,37 +29,249 @@ import java.util.logging.Level ;
 @WebServlet("/Login")
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Login() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	private Connection con;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public Login() {
+		super();
+		MysqlBDConexion miconexion = new MysqlBDConexion();
+		this.con = miconexion.getConexion();
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+
+		ResultSet rs;
+
+		String usuario = request.getParameter("usuario");
+		String password = request.getParameter("password");
+
+		try {
+			String consulta = "select * from usuarios where usuarios.id = '" + usuario + "' and contrasenia = '"+ password + "'";
+			Statement stm = this.con.createStatement();
+			rs = stm.executeQuery(consulta);
+			if (rs != null) {
+				rs.next();
+
+				String user = rs.getString("id");
+				String pass = rs.getString("contrasenia");
+				request.setAttribute("usuario", user);
+				request.setAttribute("password", pass);
+				
+				
+				String modas = modalidades();
+				request.setAttribute("modas",modas);
+				
+				
+				String asignaturas = asignaturas();
+				request.setAttribute("asignaturas",asignaturas);
+				
+				
+				String grupos = grupos();
+				request.setAttribute("grupos",grupos);
+				
+				String pruebas = tipoprueba();
+				request.setAttribute("pruebas",pruebas);
+			
+				
+				
+				String secciones = secciones();
+				request.setAttribute("secciones",secciones);
+				
+				String asign_notas = asignatura_notas();
+				request.setAttribute("notas",asign_notas);
+				
+				
+
+				String op = request.getParameter("operacion");
+				request.getSession().setAttribute("op", op);
+				request.getRequestDispatcher("/Menu.jsp").forward(request, response);
+				response.sendRedirect(request.getContextPath() + "/Menu.jsp");
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace ();
+		}
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+
+		doGet(request, response);
+	}
 	
-		   
-	    
+	
+	public String modalidades() {
+		String consulta = "select * from modalidades";
+		String resp = "";
+
+		try {
+
+			Statement stm = this.con.createStatement();
+			ResultSet rs;
+			rs = stm.executeQuery(consulta);
+			if (rs != null) {
+				rs.next();
+				do {
+					resp = resp + "<option>" + rs.getString("id_modalidad") + "  " + rs.getString("descripcion_mod")
+							+ "</option>";
+
+				} while (rs.next());
+				return resp;
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "<option>Error consultando Modalidades</option>";
+		}
+		return "<option>Error consultando Modalidades</option>";
+	}
+	
+	
+	public String asignaturas() {
+		String consulta = "select * from asignatura";
+		String resp = "";
+		try {
+			 Statement stm = con.createStatement();
+			 ResultSet  rs = stm.executeQuery(consulta);
+			if(rs!=null) {
+				rs.next();
+				do {
+					resp = resp + "<option>"+ rs.getString("id_asign")+"  " + rs.getString("descripcion_asign") + "</option>";
+					
+				}
+				while(rs.next());
+				return resp;
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "<option>Error consultando asign</option>";
+		}
+		return "<option>Error consultando asign</option>";
+	}
+	
+	
+	
+	public String secciones() {
+		String consulta = "select * from secciones";
+		String resp = "";
+		try {
+			 Statement stm = con.createStatement();
+			 ResultSet  rs = stm.executeQuery(consulta);
+
+			rs = stm.executeQuery(consulta);
+			if(rs!=null) {
+				rs.first();
+				do {
+					resp = resp + "<option>" + rs.getString("id_seccion") + "</option>";
+			
+				}
+				while(rs.next());
+				return resp;
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "<option>Error consultando secciones</option>";
+		}
+		return "<option>Error consultando secciones</option>";
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	    String op = request.getParameter("operacion");
-	    request.setAttribute(op, op);
-	  //  request.getRequestDispatcher("/vacia.jsp").forward(request, response);
-	    response.sendRedirect(request.getContextPath() + "/vacia.jsp");
+
+	public String asignatura_notas() {
+		String consulta = "select * from asignatura_notas";
+		String resp = "";
+		try {
+			 Statement stm = con.createStatement();
+			 ResultSet  rs = stm.executeQuery(consulta);
+
+			rs = stm.executeQuery(consulta);
+			if(rs!=null) {
+				rs.first();
+				do {
+					resp = resp + "<option>Codigo  "+rs.getString("cod_prueba")+"   Nº  " + rs.getString("numero_prueba") + "</option>";
+			
+				}
+				while(rs.next());
+				return resp;
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "<option>Error consultando notas</option>";
+		}
+		return "<option>Error consultando notas</option>";
+	}
+	
+	public String grupos() {
+		String consulta = "select * from grupo";
+		String resp = "";
+		try {
+			 Statement stm = con.createStatement();
+			 ResultSet  rs = stm.executeQuery(consulta);
+
+			rs = stm.executeQuery(consulta);
+			if(rs!=null) {
+				rs.first();
+				do {
+					resp = resp + "<option>"+ rs.getString("cod_grupo")+"  " + rs.getString("descrip_grupo") + "</option>";
 		
-	  
-	//	doGet(request, response);
-	}
+				}
+				while(rs.next());
+				return resp;
+			}
 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "<option>Error consultando grupos</option>";
+		}
+		return "<option>Error consultando grupos</option>";
+	}
+	
+	public String tipoprueba() {
+		String consulta = "select * from tipo_prueba";
+		String resp = "";
+		try {
+			 Statement stm = con.createStatement();
+			 ResultSet  rs = stm.executeQuery(consulta);
+
+			rs = stm.executeQuery(consulta);
+			if(rs!=null) {
+				rs.next();
+				do {
+					resp = resp + "<option>" + rs.getString("cod_prueba") + "  " + rs.getString("descrip_prueba") + "</option>";
+					
+				}
+				while(rs.next());
+				return resp; 
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "<option>Error consultando pruebas</option>";
+		}
+		return "<option>Error consultando pruebas</option>";
+	}
+	
 }
