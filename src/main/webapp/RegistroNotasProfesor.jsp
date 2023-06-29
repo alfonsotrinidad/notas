@@ -1,4 +1,12 @@
 
+<%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+	response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+	response.setDateHeader("Expires", 0); // 
+    
+    
+%>
+
 <%-- <%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %> --%>
 	<%@page import="java.util.List" %>
 	<%@page import="controlador.Login" %>
@@ -41,6 +49,7 @@
   String asign_notas = (String)session.getAttribute("notas");
   String modas = (String)session.getAttribute("modas");
   String notas = (String)session.getAttribute("notas");
+  String matriculados = (String)session.getAttribute("matriculados");
   
   
   %>
@@ -88,9 +97,13 @@
 				<label style="margin-right: 5px">Ciclo Academico</label>
 				<div class="select-dropdown">
 					<select>
-						<option value="Option 1">202381</option>
+				     <option>	<%= matriculados%></option>
+					
+					
+					
+				<%-- 		<option value="Option 1">202381</option>
 						<option value="Option 2">2nd Option</option>
-						<option value="Option 3">Option Number 3</option>
+						<option value="Option 3">Option Number 3</option> --%>
 					</select>
 				</div>
 			</div>

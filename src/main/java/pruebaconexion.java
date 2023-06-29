@@ -22,7 +22,16 @@ public class pruebaconexion {
 		    String password = "123";
 			System.out.println("Conected " + con.toString());
 			//	String consulta = "select * from usuarios where usuarios.id = '" + usuario + "' and contrasenia = '"+ password + "'";
-			String consulta = "select * from grupo";
+			String consulta = "SELECT"
+			  +" alumnos.doc_identidad as doc_alumno,"
+			  +" alumnos.nombre AS nombre_alumno,"
+			  +" alumnos.apellido AS apellido_alumno,"
+			  +" profesores.nombre AS nombre_profesor,"
+			  +" carreras.descrip_carrera AS carrera"
+			+" FROM alumnos,profesores,matriculas,carreras"
+			+" WHERE matriculas.id_alumno = alumnos.doc_identidad"
+			+" order BY alumnos.doc_identidad ";
+			 
 				System.out.println(consulta);
 				
 				Statement stm = con.createStatement();
@@ -36,11 +45,14 @@ public class pruebaconexion {
 				
 				if (rs != null) {
 					rs.first();
-
-					String user = rs.getString("cod_grupo");
-					//String pass = rs.getString("contrasenia");
-					System.out.println(user);
-			}}
+					do
+					{
+						System.out.println(rs.getString("nombre_alumno"));
+					
+					}
+					while(rs.next());
+			}
+				}
 		catch( Throwable  ex) {
 		//	Logger.getLogger(Connection.class.getName().log(Level.SEVERE, null,ex));
 			System.out.println("Error" +  ex.toString());

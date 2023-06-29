@@ -48,6 +48,11 @@ public class Login extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+		response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+		response.setDateHeader("Expires", 0); // 
+		
+		
 		ResultSet rs;
 
 		String usuario = request.getParameter("usuario");
@@ -74,6 +79,10 @@ public class Login extends HttpServlet {
 				request.setAttribute("asignaturas",asignaturas);
 				
 				
+				String matriculados = Matricula(); 
+				request.setAttribute("matriculados",matriculados);
+				
+				
 				String grupos = grupos();
 				request.setAttribute("grupos",grupos);
 				
@@ -84,6 +93,9 @@ public class Login extends HttpServlet {
 				
 				String secciones = secciones();
 				request.setAttribute("secciones",secciones);
+				
+			
+				
 				
 				String asign_notas = asignatura_notas();
 				request.setAttribute("notas",asign_notas);
@@ -255,7 +267,7 @@ public class Login extends HttpServlet {
 			 Statement stm = con.createStatement();
 			 ResultSet  rs = stm.executeQuery(consulta);
 
-			rs = stm.executeQuery(consulta);
+		//	rs = stm.executeQuery(consulta);
 			if(rs!=null) {
 				rs.next();
 				do {
@@ -274,4 +286,12 @@ public class Login extends HttpServlet {
 		return "<option>Error consultando pruebas</option>";
 	}
 	
-}
+	
+	public String Matricula() {
+	
+		return "hola desde la funcion";
+	}
+	} 
+	
+	
+
