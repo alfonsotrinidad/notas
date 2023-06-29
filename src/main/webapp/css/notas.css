@@ -1,0 +1,115 @@
+.bloque{
+	width: 1750px;
+	height: 100%;
+	margin-left: 100px;
+	margin-top: 60px;
+}
+
+.filtrotop{
+	width: 95%;
+	height: 50px;
+	margin: 10px 0px 0px 30px;
+}
+
+.select-dropdown,
+.select-dropdown * {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  box-sizing: border-box;
+  width: 200px;
+  height: 38px;
+  font-size: 13px
+}
+.select-dropdown {
+  position: relative;
+  background-color: #E6E6E6;
+  border-radius: 4px;
+}
+.select-dropdown select {
+  font-size: 1rem;
+  font-weight: normal;
+  max-width: 100%;
+  padding: 8px 24px 8px 10px;
+  border: none;
+  background-color: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  appearance: none;
+  font-size: 15px
+}
+.select-dropdown select:active, .select-dropdown select:focus {
+  outline: none;
+  box-shadow: none;
+}
+.select-dropdown:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  width: 0;
+  height: 0;
+  margin-top: -2px;
+  border-top: 5px solid #aaa;
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+}
+
+.modalidad{
+	display: flex;
+	align-items: center;
+	float: left;
+}
+
+.cicloacademico{
+	float: right;
+	display: flex;
+	align-items: center;
+}
+
+.titulo{
+	margin-top: 15px;
+	margin-left: 28px;
+	font-weight: bold;
+	color: #4723d9
+}
+
+p{
+	margin-left: 28px;
+}
+
+.filtros{
+	margin-left: 28px;
+	float: left;
+}
+
+.profesor{
+	display: flex;
+	align-items: center;
+}
+.asignatura{
+	display: flex;
+	align-items: center;
+	margin-top: 10px
+}
+
+.filtrosbot{
+	width: 200px
+}
+
+.filtrosg{
+	display: flex;
+}
+
+.seccion{
+	margin-top: 15px;
+	display: flex;
+	align-items: center;
+}
+
+.tablanotas{
+	margin-top: 244px;
+    margin-left: 23px;
+}
+
+label{font-family: 'Poppins'}
