@@ -47,6 +47,8 @@
   String notas = (String)request.getAttribute("notas");
   session.setAttribute("notas",notas);
   
+  String matriculados = (String)session.getAttribute("matriculados");
+  session.setAttribute("matriculados",matriculados);
   
   %>
 	<header class="header" id="header">

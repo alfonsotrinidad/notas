@@ -50,16 +50,16 @@ public class Login extends HttpServlet {
 
 		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 		response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-		response.setDateHeader("Expires", 0); // 
-		
-		
+		response.setDateHeader("Expires", 0); //
+
 		ResultSet rs;
 
 		String usuario = request.getParameter("usuario");
 		String password = request.getParameter("password");
 
 		try {
-			String consulta = "select * from usuarios where usuarios.id = '" + usuario + "' and contrasenia = '"+ password + "'";
+			String consulta = "select * from usuarios where usuarios.id = '" + usuario + "' and contrasenia = '"
+					+ password + "'";
 			Statement stm = this.con.createStatement();
 			rs = stm.executeQuery(consulta);
 			if (rs != null) {
@@ -69,38 +69,27 @@ public class Login extends HttpServlet {
 				String pass = rs.getString("contrasenia");
 				request.setAttribute("usuario", user);
 				request.setAttribute("password", pass);
-				
-				
+
 				String modas = modalidades();
-				request.setAttribute("modas",modas);
-				
-				
+				request.setAttribute("modas", modas);
+
 				String asignaturas = asignaturas();
-				request.setAttribute("asignaturas",asignaturas);
-				
-				
-				String matriculados = Matricula(); 
-				request.setAttribute("matriculados",matriculados);
-				
-				
+				request.setAttribute("asignaturas", asignaturas);
+
+				String matriculados = matricula();
+				request.getSession().setAttribute("matriculados", matriculados);
+
 				String grupos = grupos();
-				request.setAttribute("grupos",grupos);
-				
+				request.setAttribute("grupos", grupos);
+
 				String pruebas = tipoprueba();
-				request.setAttribute("pruebas",pruebas);
-			
-				
-				
+				request.setAttribute("pruebas", pruebas);
+
 				String secciones = secciones();
-				request.setAttribute("secciones",secciones);
-				
-			
-				
-				
+				request.setAttribute("secciones", secciones);
+
 				String asign_notas = asignatura_notas();
-				request.setAttribute("notas",asign_notas);
-				
-				
+				request.setAttribute("notas", asign_notas);
 
 				String op = request.getParameter("operacion");
 				request.getSession().setAttribute("op", op);
@@ -110,7 +99,7 @@ public class Login extends HttpServlet {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace ();
+			e.printStackTrace();
 		}
 
 	}
@@ -121,12 +110,10 @@ public class Login extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 
 		doGet(request, response);
 	}
-	
-	
+
 	public String modalidades() {
 		String consulta = "select * from modalidades";
 		String resp = "";
@@ -153,21 +140,20 @@ public class Login extends HttpServlet {
 		}
 		return "<option>Error consultando Modalidades</option>";
 	}
-	
-	
+
 	public String asignaturas() {
 		String consulta = "select * from asignatura";
 		String resp = "";
 		try {
-			 Statement stm = con.createStatement();
-			 ResultSet  rs = stm.executeQuery(consulta);
-			if(rs!=null) {
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery(consulta);
+			if (rs != null) {
 				rs.next();
 				do {
-					resp = resp + "<option>"+ rs.getString("id_asign")+"  " + rs.getString("descripcion_asign") + "</option>";
-					
-				}
-				while(rs.next());
+					resp = resp + "<option>" + rs.getString("id_asign") + "  " + rs.getString("descripcion_asign")
+							+ "</option>";
+
+				} while (rs.next());
 				return resp;
 			}
 
@@ -178,24 +164,21 @@ public class Login extends HttpServlet {
 		}
 		return "<option>Error consultando asign</option>";
 	}
-	
-	
-	
+
 	public String secciones() {
 		String consulta = "select * from secciones";
 		String resp = "";
 		try {
-			 Statement stm = con.createStatement();
-			 ResultSet  rs = stm.executeQuery(consulta);
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery(consulta);
 
 			rs = stm.executeQuery(consulta);
-			if(rs!=null) {
+			if (rs != null) {
 				rs.first();
 				do {
 					resp = resp + "<option>" + rs.getString("id_seccion") + "</option>";
-			
-				}
-				while(rs.next());
+
+				} while (rs.next());
 				return resp;
 			}
 
@@ -207,22 +190,21 @@ public class Login extends HttpServlet {
 		return "<option>Error consultando secciones</option>";
 	}
 
-
 	public String asignatura_notas() {
 		String consulta = "select * from asignatura_notas";
 		String resp = "";
 		try {
-			 Statement stm = con.createStatement();
-			 ResultSet  rs = stm.executeQuery(consulta);
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery(consulta);
 
 			rs = stm.executeQuery(consulta);
-			if(rs!=null) {
+			if (rs != null) {
 				rs.first();
 				do {
-					resp = resp + "<option>Codigo  "+rs.getString("cod_prueba")+"   Nº  " + rs.getString("numero_prueba") + "</option>";
-			
-				}
-				while(rs.next());
+					resp = resp + "<option>Codigo  " + rs.getString("cod_prueba") + "   Nº  "
+							+ rs.getString("numero_prueba") + "</option>";
+
+				} while (rs.next());
 				return resp;
 			}
 
@@ -233,22 +215,22 @@ public class Login extends HttpServlet {
 		}
 		return "<option>Error consultando notas</option>";
 	}
-	
+
 	public String grupos() {
 		String consulta = "select * from grupo";
 		String resp = "";
 		try {
-			 Statement stm = con.createStatement();
-			 ResultSet  rs = stm.executeQuery(consulta);
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery(consulta);
 
 			rs = stm.executeQuery(consulta);
-			if(rs!=null) {
+			if (rs != null) {
 				rs.first();
 				do {
-					resp = resp + "<option>"+ rs.getString("cod_grupo")+"  " + rs.getString("descrip_grupo") + "</option>";
-		
-				}
-				while(rs.next());
+					resp = resp + "<option>" + rs.getString("cod_grupo") + "  " + rs.getString("descrip_grupo")
+							+ "</option>";
+
+				} while (rs.next());
 				return resp;
 			}
 
@@ -259,23 +241,23 @@ public class Login extends HttpServlet {
 		}
 		return "<option>Error consultando grupos</option>";
 	}
-	
+
 	public String tipoprueba() {
 		String consulta = "select * from tipo_prueba";
 		String resp = "";
 		try {
-			 Statement stm = con.createStatement();
-			 ResultSet  rs = stm.executeQuery(consulta);
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery(consulta);
 
-		//	rs = stm.executeQuery(consulta);
-			if(rs!=null) {
+			// rs = stm.executeQuery(consulta);
+			if (rs != null) {
 				rs.next();
 				do {
-					resp = resp + "<option>" + rs.getString("cod_prueba") + "  " + rs.getString("descrip_prueba") + "</option>";
-					
-				}
-				while(rs.next());
-				return resp; 
+					resp = resp + "<option>" + rs.getString("cod_prueba") + "  " + rs.getString("descrip_prueba")
+							+ "</option>";
+
+				} while (rs.next());
+				return resp;
 			}
 
 		} catch (SQLException e) {
@@ -285,13 +267,36 @@ public class Login extends HttpServlet {
 		}
 		return "<option>Error consultando pruebas</option>";
 	}
-	
-	
-	public String Matricula() {
-	
-		return "hola desde la funcion";
-	}
-	} 
-	
-	
 
+	public String matricula() {
+		  String resp = ""; String consulta = 
+				  
+		  "SELECT alumnos.doc_identidad as doc_alumno, alumnos.nombre AS nombre_alumno,  alumnos.apellido AS apellido_alumno,  "
+		  +" profesores.nombre AS nombre_profesor, carreras.descrip_carrera AS carrera, usuarios.id_profesor AS id_profesor "
+		  +" FROM alumnos,profesores,matriculas,carreras,usuarios WHERE "
+		  + "  matriculas.id_alumno = alumnos.doc_identidad"
+		  + "  AND profesores.doc_identidad = usuarios.id_profesor"
+		  + "  AND profesores.doc_identidad =  '99453311' order BY alumnos.doc_identidad ";
+		  try { 
+			  Statement stm = con.createStatement(); 
+			  ResultSet rs = stm.executeQuery(consulta);
+			  rs = stm.executeQuery(consulta);
+			    if(rs!=null) 
+			       {
+			    	 rs.next(); 
+			    	 do {
+			    		 resp = resp 
+			    			+ "<tr><td>"+ rs.getString("doc_alumno") + "</td>"
+			    			+ "<td>"+ rs.getString("nombre_alumno") + "</td>"
+			    			+ "<td>"+ rs.getString("apellido_alumno") + "</td>"
+			    			+ "<td><input type='text'> </td></tr>";
+			    	 } while(rs.next());
+		            return resp; 
+		          } } 
+		  catch (SQLException e) {
+		  e.printStackTrace(); 
+		  return consulta; 
+		  }
+		  return consulta;
+	}
+}

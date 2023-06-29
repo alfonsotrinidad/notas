@@ -59,6 +59,7 @@
 		</div>
 		<div class="Usuario">
 			<h4><%= usuario%></h4>
+			
 		</div>
 	</header>
 	<div class="l-navbar" id="nav-bar">
@@ -97,13 +98,9 @@
 				<label style="margin-right: 5px">Ciclo Academico</label>
 				<div class="select-dropdown">
 					<select>
-				     <option>	<%= matriculados%></option>
-					
-					
-					
-				<%-- 		<option value="Option 1">202381</option>
+				     	<option value="Option 1">202381</option>
 						<option value="Option 2">2nd Option</option>
-						<option value="Option 3">Option Number 3</option> --%>
+						<option value="Option 3">Option Number 3</option> 
 					</select>
 				</div>
 			</div>
@@ -182,40 +179,20 @@
 					</div>
 					<div class="row" > 
 						<div class="col-md-10">
-								<div class="content" >
+								<div class="content" style="overflow: scroll; height: 300px">
 						
 									<table id="mitabla" class="table table-striped table-bordered" >
-										<thead>
+										<thead >
 											<tr>
-												<th>Alumno</th>
-												<th>Apellidos y Nombres</th>
-												<th>Estado de Matricula</th>
+												<th>Id Alumno</th>
+												<th>Nombre</th>
+												<th>Apellidor</th>
 												<th>Nota</th>
 											</tr>
 										</thead>
 										<tbody>
-												     
-<%-- 												<c:forEach items="${listanotas}" var="x"> --%>
-<!-- 													<tr> -->
-<%-- 														<td>${x.id_producto}</td> --%>
-<%-- 														<td>${x.descripcion}</td> --%>
-<%-- 														<td>${x.precio_venta}</td> --%>
-<%-- 														<td>${x.stock_actual}</td> --%>
-<%-- 														<td>${x.fecha_venc}</td> --%>
-<%-- 														<td>${x.nom_categoria}</td> --%>
-<!-- 														<td> -->
-															
-<!-- 														 <a href="XXXXXXXXXXXXXXXXXX" ><img src='images/edit.gif' width='auto' height='auto' /></a>  -->
-															
-<!-- 														</td> -->
-<!-- 														<td> -->
-<!-- 															<button type='button' onclick="XXXXXXXXXXXXXXXX"> -->
-<!-- 																<img src='images/delete.gif' width='auto' height='auto' /> -->
-<!-- 															</button> -->
-<!-- 														</td> -->
-<!-- 													</tr> -->
-<%-- 												</c:forEach> --%>
-										</tbody>
+											<%= matriculados%>	     
+ 										</tbody>
 										</table>	
 									
 								</div>	
